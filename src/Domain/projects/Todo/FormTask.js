@@ -4,14 +4,17 @@ import {
 
 import Field from "Components/Field";
 import Button from "Components/Button";
+
 const useStyles = makeStyles((theme) => ({
     register: {
         margin: theme.spacing(2, 0, 1),
     },
+    field: {
+        fontSize: 10
+    },
 }));
 
-export default function Form() {
-    const classes = useStyles();
+export default function FormTask() {
 
     return (
         <Container  >
@@ -19,9 +22,13 @@ export default function Form() {
                 <Field
                     label={"Name"}
                     name={"Name"}
+                    size={"small"}
                 />
-                <Button type={"submit"}>
-                    Create new project
+                <Button
+                    type={"submit"}
+                    size={"small"}
+                >
+                    Add new task
                     </Button>
             </form>
         </Container>

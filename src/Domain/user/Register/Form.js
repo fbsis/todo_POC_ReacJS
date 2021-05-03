@@ -1,15 +1,15 @@
+import React, { useState, } from 'react';
+
 import {
     makeStyles
 } from '@material-ui/core';
-import { useHistory } from 'react-router'
 import { useForm } from 'react-hook-form';
-import { store } from '../../../store/Store'
-import { useContext } from "react";
-import { Alert } from '@material-ui/lab';
+import { useHistory } from 'react-router'
 
 import Field from "Components/Field";
 import Button from "Components/Button";
-import { login } from "./../Services/Login";
+import { register as registerForm } from "../Services/Register";
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,38 +33,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Form() {
     const classes = useStyles();
-    const { state, dispatch } = useContext(store);
     const history = useHistory();
+
+    const [message, setMessage] = useState("");
+
 
     const {
         register,
         handleSubmit: handleSubmitLib,
-        errors,
+        errors
     } = useForm({});
 
     const handlerSubmit = async (data) => {
-
         try {
-            const token = await login(data.email, data.password);
-
-            if (token.token) {
-                dispatch({ type: 'login', data: token.token });
-                history.push("/todo");
-                return;
+            const register = await registerForm(data.email, data.password);
+            if (register === 'Error') {
+                setMessage("error on create, this email is already in use");
             } else {
-                dispatch({ type: 'login', data: "The password is wrong" })
+                history.push("/login");
             }
 
-        } catch (error) {
-            dispatch({ type: 'login', data: error })
-        }
+        } catch (error) {}
     }
 
     return (
-
         <form className={classes.form} onSubmit={handleSubmitLib(handlerSubmit)}>
-            {state?.user?.token && (
-                <Alert severity="error">{state?.user?.token}</Alert>
+            {message && (
+                <Alert severity="error">{message}</Alert>
             )}
             <Field
                 errors={errors}
@@ -79,8 +74,9 @@ export default function Form() {
                 type={"password"}
                 ref={register({ required: true })}
             />
+
             <Button type={"submit"}>
-                Sign In
+                Sign On
                 </Button>
         </form>
     );
