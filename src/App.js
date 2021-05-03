@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { StateProvider } from './store/Store';
+import TodoContainer from "./Domain/projects/Todo/TodoContainer";
+import LoginContainer from "./Domain/user/Login/LoginContainer";
+import Header from "./Components/Header";
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StateProvider>
+      <CssBaseline />
+      <Header />
+      <Container >
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" component={LoginContainer} />
+            <Route path="/login" component={LoginContainer} />
+            <Route path="/todo" component={TodoContainer} />
+          </Switch>
+        </ BrowserRouter>
+      </Container>
+    </StateProvider>
   );
 }
 
