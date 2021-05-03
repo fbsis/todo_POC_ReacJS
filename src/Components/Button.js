@@ -8,10 +8,11 @@ Button.propTypes = {
     errors: PropTypes.bool,
     ref: PropTypes.instanceOf(Object),
     type: PropTypes.string,
+    size: PropTypes.string,
 };
 
 export default function Button(props) {
-    const { children, type } = props;
+    const { children, type, size } = props;
 
     return (
         <Mbuttom
@@ -19,6 +20,8 @@ export default function Button(props) {
             fullWidth
             variant="contained"
             color="primary"
+            size={size}
+
         >
             {children}
         </Mbuttom>

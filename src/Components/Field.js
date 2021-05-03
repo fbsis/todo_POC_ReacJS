@@ -16,12 +16,14 @@ const Field = React.forwardRef((props, ref) => {
         label,
         handleUpdated,
         errors,
-        defaultValue
+        defaultValue,
+        size
     } = props;
 
     const error = getError(errors, name);
 
     return (
+        
         <TextField
             inputRef={ref}
             error={error ? true : false}
@@ -33,6 +35,7 @@ const Field = React.forwardRef((props, ref) => {
             label={label}
             name={name}
             id={name}
+            size={size}
             onChange={handleUpdated}
             defaultValue={defaultValue}
         />
@@ -48,6 +51,7 @@ Field.propTypes = {
     required: PropTypes.bool,
     errors: PropTypes.bool,
     defaultValue: PropTypes.string,
+    size: PropTypes.string,
 
 };
 
